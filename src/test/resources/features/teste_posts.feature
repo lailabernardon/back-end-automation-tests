@@ -20,3 +20,11 @@ Feature: JSONPlaceholder API Posts
       | a    |
       | 1025 |
 
+  Scenario Outline: Fetch a post by ID - Post Id comments
+    Given I have the JSONPlaceholder API endpoint for posts
+    When I send a GET request for post with ID "<id>" and comments "<comments>"
+    Then I should receive a valid response
+    And the comments in the Post must have a correct structure
+    Examples:
+      | id | comments |
+      | 1  | comments |

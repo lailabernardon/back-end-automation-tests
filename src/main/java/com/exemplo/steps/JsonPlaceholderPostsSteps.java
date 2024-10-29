@@ -6,19 +6,18 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import com.exemplo.Utilities.Utils;
 
+
+import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
-import io.restassured.response.Response;
-
-import static org.junit.Assert.assertTrue;
-
-import java.util.Map;
-
-public class JsonPlaceholderPostsSteps {
-
+public class JsonPlaceholderPostsSteps extends Utils{
+    private String actualEmail;
     private String endpoint;
     private Response response;
 
@@ -102,4 +101,18 @@ public class JsonPlaceholderPostsSteps {
         assertTrue("The structure of the JSON response is incorrect", isStructureValid);
         System.out.println(isStructureValid);
     }
+
+    @When("I send a GET request for post with ID {string} and comments {string}")
+    public void iSendAGETRequestForPostWithIDAndComments(String id, String comments) {
+        response = RestAssured.get(endpoint + "/" + id + "/" + comments);
+        System.out.println(endpoint + "/" + id + "/" + comments + " was sent and the response was:" + response);
+
+    }
+
+    @And("the comments in the Post must have a correct structure")
+    public void theCommentsInThePostMustHaveACorrectStructure() {
+        validatePostCommentsBodyStructure();
+    }
+
+
 }

@@ -58,3 +58,4 @@ Feature: JSONPlaceholder API Todos
     Examples:
       | id  |
       | 1   |
+      | 10   |

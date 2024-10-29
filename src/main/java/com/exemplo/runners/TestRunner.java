@@ -9,5 +9,6 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com.exemplo.steps"
 )
-public class TestRunner {
+public class
+TestRunner {
 }

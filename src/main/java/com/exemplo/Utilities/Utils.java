@@ -6,17 +6,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class Utils {
     Response responseTodos;
+    Response responsePostComments;
     Map<String, Object> bodyMap;
+    Map<String, Object> bodyMapPostComments;
 
     public void LineAndSeparatorLine() {
         System.out.println("\n---------------------------------------------------------");
@@ -29,6 +33,16 @@ public class Utils {
         System.out.println("getBody " + getBody);
         LineAndSeparatorLine();
         return endpointTodos;
+    }
+
+    public String getResponseBodyPostComments(int id) throws IOException {
+        String endpointPostComments = "https://jsonplaceholder.typicode.com/posts";
+        responsePostComments = RestAssured.get(endpointPostComments + "/" + id + "/comments");
+        System.out.println(endpointPostComments + "/" + id + "/comments" + " was sent and the response was:" + responsePostComments);
+        String getBody = responsePostComments.getBody().asString();
+        System.out.println("getBody " + getBody);
+        LineAndSeparatorLine();
+        return endpointPostComments;
     }
 
     public void validateTodosBodyStructure() throws IOException {
@@ -58,6 +72,7 @@ public class Utils {
         assertNotNull("completed should not be null", bodyMap.get("completed"));
         System.out.println("The attrubtes are not null");
     }
+
     public void validateTodosNumberOfUsers() throws IOException {
         responseTodos = RestAssured.given()
                 .baseUri("https://jsonplaceholder.typicode.com/")
@@ -86,5 +101,30 @@ public class Utils {
         System.out.println("User IDs unicos: " + userIdSet);
     }
 
+    public void requestPostComments() {
+        responsePostComments = RestAssured.given()
+                .when()
+                .get("https://jsonplaceholder.typicode.com/posts/1/comments")
+                .then()
+                .extract()
+                .response();
+    }
+
+    public void validatePostCommentsBodyStructure() {
+        requestPostComments();
+
+        List<Map<String, Object>> commentsList = responsePostComments.jsonPath().getList("$");
+
+        for (Map<String, Object> comment : commentsList) {
+            assertTrue("Comment should contain postId", comment.containsKey("postId"));
+            assertTrue("Comment should contain id", comment.containsKey("id"));
+            assertTrue("Comment should contain name", comment.containsKey("name"));
+            assertTrue("Comment should contain email", comment.containsKey("email"));
+
+            assertTrue("Comment should contain body", comment.containsKey("body"));
+        }
+
+        System.out.println("The structure of each comment is as expected");
+    }
 
 }
