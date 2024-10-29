@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
-public class JsonPlaceholderSteps {
+public class JsonPlaceholderPostsSteps {
 
     private String endpoint;
     private Response response;
@@ -26,12 +26,6 @@ public class JsonPlaceholderSteps {
     public void i_have_the_jsonplaceholder_api_endpoint_for_posts() {
         endpoint = "https://jsonplaceholder.typicode.com/posts";
         System.out.println(endpoint + " is beeing tested");
-    }
-
-    @When("I send a GET request for post with ID {int}")
-    public void i_send_a_get_request_for_post_with_id(int id) {
-        response = RestAssured.get(endpoint + "/" + id);
-        System.out.println(endpoint + "/" + id + " was sent and the response was:" + response);
     }
 
     @Then("I should receive a valid response")
@@ -46,14 +40,6 @@ public class JsonPlaceholderSteps {
         System.out.println("Status code: " + response.getStatusCode());
     }
 
-    @Then("the post title should be {string}")
-    public void the_post_title_should_be(String expectedTitle) {
-        String actualTitle = response.jsonPath().getString("title");
-        assertEquals(expectedTitle, actualTitle);
-        assertNotNull(actualTitle);
-        System.out.println("Actual title was: " + actualTitle);
-        System.out.println("Expected title was: " + expectedTitle);
-    }
 
     @When("I send a GET request for post with ID {string}")
     public void iSendAGETRequestForPostWithID(String id) {
