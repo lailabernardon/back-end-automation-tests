@@ -120,7 +120,6 @@ public class Utils {
             assertTrue("Comment should contain id", comment.containsKey("id"));
             assertTrue("Comment should contain name", comment.containsKey("name"));
             assertTrue("Comment should contain email", comment.containsKey("email"));
-
             assertTrue("Comment should contain body", comment.containsKey("body"));
         }
 

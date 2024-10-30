@@ -25,6 +25,7 @@ Feature: JSONPlaceholder API Posts
     When I send a GET request for post with ID "<id>" and comments "<comments>"
     Then I should receive a valid response
     And the comments in the Post must have a correct structure
+    And the post id should be as "<id>" for posts
     Examples:
       | id | comments |
       | 1  | comments |

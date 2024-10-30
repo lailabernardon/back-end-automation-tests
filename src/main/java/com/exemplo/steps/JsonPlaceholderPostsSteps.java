@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class JsonPlaceholderPostsSteps extends Utils{
+public class JsonPlaceholderPostsSteps extends Utils {
     private String actualEmail;
     private String endpoint;
     private Response response;
@@ -115,4 +115,12 @@ public class JsonPlaceholderPostsSteps extends Utils{
     }
 
 
+    @And("the post id should be as {string} for posts")
+    public void thePostIdShouldBeAsForPosts(String id) {
+        List<String> actualId = response.jsonPath().getList("postId", String.class);
+        for (String actual : actualId) {
+            assertEquals(actual, id);
+            System.out.println("Actual id: " +actualId + "Expected:" + id);
+        }
+    }
 }
